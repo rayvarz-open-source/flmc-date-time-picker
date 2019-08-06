@@ -22,7 +22,7 @@ import {
   DatePicker,
   DateTimePicker
 } from "@material-ui/pickers";
-import MomentUtils from "@date-io/moment";
+import { MuiPickersUtilsProviderProps } from "@material-ui/pickers/MuiPickersUtilsProvider";
 
 // TODO: refactor
 
@@ -46,6 +46,7 @@ export type Options = {
   inputElement?: TextInputElement;
   localization: Localization;
   type: PickerTypes;
+  dateUtils: any;
 };
 
 export type PickerValueType = BehaviorSubject<Date | null> | Observable<Date | null> | (Date | null);
@@ -98,7 +99,7 @@ export function Picker(value: PickerValueType, options: Options): IElement {
 
   let valueObservable = valueContainer
     .asObservable()
-    .pipe(map(v => (v == null ? "" : new MomentUtils().date(v).format(options.format))));
+    .pipe(map(v => (v == null ? "" : new options.dateUtils().date(v).format(options.format))));
   let inputElement = options.inputElement == null ? new TextInputElement() : options.inputElement;
   inputElement.value(valueObservable);
 
@@ -153,5 +154,5 @@ function View({ controller, options }: Props): React.ReactElement {
     throw new Error("Invalid picker type");
   }
 
-  return <MuiPickersUtilsProvider utils={MomentUtils}>{createPicker()}</MuiPickersUtilsProvider>;
+  return <MuiPickersUtilsProvider utils={options.dateUtils}>{createPicker()}</MuiPickersUtilsProvider>;
 }

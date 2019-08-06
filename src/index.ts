@@ -1,6 +1,7 @@
 import { Picker, Options, PickerTypes, Localization } from "./picker";
 import IElement from "flmc-lite-renderer/build/flmc-data-layer/FormController/IElement";
 import { PickerValueType } from "./picker";
+import MomentUtils from "@date-io/moment";
 
 const defaultLocalization: Localization = {
   ok: "Ok",
@@ -12,7 +13,8 @@ const defaultLocalization: Localization = {
 const defaultOptions = {
   showNow: true,
   clearable: true,
-  localization: defaultLocalization
+  localization: defaultLocalization,
+  dateUtils: MomentUtils
 };
 
 function TimePicker(value: PickerValueType, options?: Options): IElement {
