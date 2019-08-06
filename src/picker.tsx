@@ -16,42 +16,40 @@ import {
 } from "flmc-lite-renderer";
 import { isSubject } from "flmc-lite-renderer/build/flmc-data-layer";
 import { TextInputElement } from "flmc-lite-renderer/build/form/elements/input/TextInputElement";
-import { TimePicker as TimePickerView, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import {
+  TimePicker as TimePickerView,
+  MuiPickersUtilsProvider,
+  DatePicker,
+  DateTimePicker
+} from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 
 // TODO: refactor
 
-type Localization = {
+export type Localization = {
   ok: string;
   cancel: string;
   now: string;
   clear: string;
 };
 
-const defaultLocalization: Localization = {
-  ok: "Ok",
-  cancel: "Cancel",
-  now: "Now",
-  clear: "Clear"
-};
+export enum PickerTypes {
+  TimePicker,
+  DatePicker,
+  DateTimePicker
+}
 
-type Options = {
+export type Options = {
   format: string;
   showNow: boolean;
   clearable: boolean;
   inputElement?: TextInputElement;
   localization: Localization;
+  type: PickerTypes;
 };
 
-export function TimePicker(
-  value: BehaviorSubject<Date | null> | Observable<Date | null> | (Date | null),
-  options: Options = {
-    format: "LT",
-    showNow: true,
-    clearable: true,
-    localization: defaultLocalization
-  }
-): IElement {
+export type PickerValueType = BehaviorSubject<Date | null> | Observable<Date | null> | (Date | null);
+export function Picker(value: PickerValueType, options: Options): IElement {
   let valueContainer: BehaviorSubject<Date | null>;
   if (isSubject(value)) {
     valueContainer = value;
@@ -106,7 +104,7 @@ export function TimePicker(
 
   // connect input to modal
 
-  inputElement.endIcon("access_time").onEndIconClick(() => {
+  inputElement.endIcon("calendar_today").onEndIconClick(() => {
     lastDate = valueContainer.value;
     open.next(true);
   });
@@ -143,9 +141,17 @@ function View({ controller, options }: Props): React.ReactElement {
     controller.next(v._d);
   }
 
-  return (
-    <MuiPickersUtilsProvider utils={MomentUtils}>
-      <TimePickerView ampm={false} variant="static" openTo="hours" value={value} onChange={handleOnChange} />
-    </MuiPickersUtilsProvider>
-  );
+  function createPicker(): React.ReactElement {
+    switch (options.type) {
+      case PickerTypes.TimePicker:
+        return <TimePickerView ampm={false} variant="static" openTo="hours" value={value} onChange={handleOnChange} />;
+      case PickerTypes.DatePicker:
+        return <DatePicker ampm={false} variant="static" value={value} onChange={handleOnChange} />;
+      case PickerTypes.DateTimePicker:
+        return <DateTimePicker ampm={false} variant="static" value={value} onChange={handleOnChange} />;
+    }
+    throw new Error("Invalid picker type");
+  }
+
+  return <MuiPickersUtilsProvider utils={MomentUtils}>{createPicker()}</MuiPickersUtilsProvider>;
 }
