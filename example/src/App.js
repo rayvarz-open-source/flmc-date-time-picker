@@ -2,9 +2,13 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import FLMC, { FormController, Label } from "flmc-lite-renderer";
+import { TimePicker } from "flmc-date-time-picker";
+import { BehaviorSubject } from "rxjs";
 
 class SampleForm extends FormController {
-  elements = [Label("This is a test label")];
+  value = new BehaviorSubject(null);
+
+  elements = [Label("This is a test label"), TimePicker(this.value)];
 }
 
 const categoties = {
