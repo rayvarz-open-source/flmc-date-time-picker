@@ -3,9 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1"
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5",
+    "react-scripts": "3.0.1",
+    "flmc-lite-renderer": "1.0.5",
+    "flmc-date-time-picker": "file:.."
+  },
+  "devDependencies": {
+    "babel-core": "6.26.0",
+    "babel-eslint": "7.2.3",
+    "babel-jest": "20.0.3",
+    "babel-loader": "7.1.2",
+    "babel-preset-react-app": "^3.1.2",
+    "babel-runtime": "6.26.0"
   },
   "scripts": {
     "start": "react-scripts start",
