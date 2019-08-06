@@ -81,16 +81,18 @@ export function Picker(value: PickerValueType, options: Options): IElement {
             open.next(false);
             valueContainer.next(lastDate);
           }),
-        Container([Space()]), // TODO: container needs atleast one element in flmc <1.0.5, this is a temporary fix
+        Container([]),
         Button(options.localization.now)
           .variant(ButtonVariant.Text)
           .onClick(() => valueContainer.next(new Date()))
           .visibility(options.showNow ? VisibilityType.Show : VisibilityType.Gone)
       ])
         .direction(ContainerDirection.RowReverse)
-        .flex([0, 0, 1, 0])
+        .flex([0, 0, 1, 0]),
+      Space().height(10)
     ])
   )
+    .noPadding(true)
     .open(open)
     .visibileHeader(false);
 
