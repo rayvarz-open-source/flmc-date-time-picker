@@ -22,7 +22,6 @@ import {
   DatePicker,
   DateTimePicker
 } from "@material-ui/pickers";
-import { MuiPickersUtilsProviderProps } from "@material-ui/pickers/MuiPickersUtilsProvider";
 
 // TODO: refactor
 
