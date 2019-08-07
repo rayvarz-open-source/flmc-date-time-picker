@@ -46,6 +46,7 @@ export type Options = {
   localization: Localization;
   type: PickerTypes;
   dateUtils: any;
+  locale?: string;
 };
 
 export type PickerValueType = BehaviorSubject<Date | null> | Observable<Date | null> | (Date | null);
@@ -155,5 +156,9 @@ function View({ controller, options }: Props): React.ReactElement {
     throw new Error("Invalid picker type");
   }
 
-  return <MuiPickersUtilsProvider utils={options.dateUtils}>{createPicker()}</MuiPickersUtilsProvider>;
+  return (
+    <MuiPickersUtilsProvider utils={options.dateUtils} locale={options.locale}>
+      {createPicker()}
+    </MuiPickersUtilsProvider>
+  );
 }
