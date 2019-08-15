@@ -1,27 +1,26 @@
-import * as React from "react";
-import { BehaviorSubject, Observable, isObservable } from "rxjs";
-import { map } from "rxjs/operators";
-import IElement from "flmc-lite-renderer/build/flmc-data-layer/FormController/IElement";
 import {
-  TextInput,
+  DatePicker,
+  DateTimePicker,
+  MuiPickersUtilsProvider,
+  TimePicker as TimePickerView
+} from "@material-ui/pickers";
+import {
+  Button,
+  ButtonColor,
+  ButtonVariant,
   Container,
+  ContainerDirection,
   Modal,
   Raw,
-  Button,
-  ContainerDirection,
-  ButtonVariant,
-  ButtonColor,
-  VisibilityType,
-  Space
+  Space,
+  VisibilityType
 } from "flmc-lite-renderer";
 import { isSubject } from "flmc-lite-renderer/build/flmc-data-layer";
+import IElement from "flmc-lite-renderer/build/flmc-data-layer/FormController/IElement";
 import { TextInputElement } from "flmc-lite-renderer/build/form/elements/input/TextInputElement";
-import {
-  TimePicker as TimePickerView,
-  MuiPickersUtilsProvider,
-  DatePicker,
-  DateTimePicker
-} from "@material-ui/pickers";
+import * as React from "react";
+import { BehaviorSubject, isObservable, Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 // TODO: refactor
 
@@ -95,7 +94,7 @@ export function Picker(value: PickerValueType, options: Options): IElement {
   )
     .noPadding(true)
     .open(open)
-    .visibileHeader(false);
+    .visibleHeader(false);
 
   // Input
 
